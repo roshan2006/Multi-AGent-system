@@ -1,7 +1,22 @@
-import streamlit as st
+import os
 import time
-from agents import build_reader_agent, build_search_agent, writer_chain, critic_chain
+import streamlit as st
 
+st.set_page_config(
+    page_title="ResearchMind · AI Research Agent",
+    page_icon="🔬",
+    layout="wide",
+    initial_sidebar_state="collapsed",
+)
+
+try:
+    os.environ["OPENROUTER_API_KEY"] = st.secrets["OPENROUTER_API_KEY"]
+    os.environ["TAVILY_API_KEY"] = st.secrets["TAVILY_API_KEY"]
+except Exception:
+    st.error("API keys are missing. Please check Streamlit Cloud Secrets.")
+    st.stop()
+
+from agents import build_reader_agent, build_search_agent, writer_chain, critic_chain
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="ResearchMind · AI Research Agent",
